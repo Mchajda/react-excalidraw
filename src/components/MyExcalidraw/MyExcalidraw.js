@@ -3,8 +3,10 @@ import { Excalidraw } from '@excalidraw/excalidraw';
 import './style.css';
 
 const MyExcalidraw = () => {
+    const vHeight = window.innerHeight - 64;
+    console.log(vHeight);
     return (
-        <div style={{ height: "100vh", width: '100%' }}>
+        <div style={{ height: vHeight + "px", width: '100%' }}>
             <Excalidraw
                 initialData={null}
                 onChange={(elements, state) =>
