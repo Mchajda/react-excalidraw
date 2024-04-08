@@ -4,12 +4,12 @@ import './style.css';
 
 const vHeight = window.innerHeight - 64;
 
-const MyExcalidraw = () => {       
+const MyExcalidraw = ({activeBoard}) => {       
     const [elements, setElements] = useState([]);
     const [appState, setAppState] = useState({});
 
     useEffect(() => {
-        const savedData = localStorage.getItem('excalidrawData');
+        const savedData = localStorage.getItem(activeBoard);
         if (savedData) {
             try {
                 const parsedData = JSON.parse(savedData);
@@ -40,7 +40,9 @@ const MyExcalidraw = () => {
     
         // Save the current board state to localStorage
         const dataToSave = { elements, appState };
-        localStorage.setItem('excalidrawData', JSON.stringify(dataToSave));
+        localStorage.setItem(activeBoard, JSON.stringify(dataToSave));
+
+        // handleCurrentBoardChange();
     };
     
 

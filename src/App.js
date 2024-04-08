@@ -70,10 +70,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+const boards = ['Board%201', 'Board%202', 'React%20groomer'];
 
 function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [activeBoard, setActiveBoard] = React.useState("Board%201");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -82,6 +84,10 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleBoardChange = () => {
+    setActiveBoard();
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -122,21 +128,8 @@ function App() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
+          {['Board 1', 'Board 2', 'React groomer'].map((text, index) => (
+            <ListItem key={text} disablePadding onClick={() => {handleBoardChange(text)}}>
               <ListItemButton>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -149,7 +142,7 @@ function App() {
       </Drawer>
       <Main open={open} sx={{ p:0 }}>
         <DrawerHeader />
-        <MyExcalidraw />
+        <MyExcalidraw activeBoard={activeBoard} /* handleCurrentBoardChange={handleBoardChange} */ />
       </Main>
     </Box>
   );
