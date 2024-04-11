@@ -22,6 +22,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { CommitSharp } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -74,8 +75,10 @@ const boards = ['Board%201', 'Board%202', 'React%20groomer'];
 
 function App() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [activeBoard, setActiveBoard] = React.useState("Board%201");
+  const [open, setOpen] = React.useState(true);
+
+  const [board, setBoard] = React.useState("Board 1");
+  const [oldBoard, setOldBoard] = React.useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -85,8 +88,9 @@ function App() {
     setOpen(false);
   };
 
-  const handleBoardChange = () => {
-    setActiveBoard();
+  const handleBoardChange = (newBoardName, oldBoardName) => {
+    setBoard(newBoardName);
+    setOldBoard(oldBoardName)
   }
 
   return (
@@ -104,7 +108,7 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            {board}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -129,7 +133,7 @@ function App() {
         <Divider />
         <List>
           {['Board 1', 'Board 2', 'React groomer'].map((text, index) => (
-            <ListItem key={text} disablePadding onClick={() => {handleBoardChange(text)}}>
+            <ListItem key={text} disablePadding onClick={() => {handleBoardChange(text, board)}}>
               <ListItemButton>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -142,7 +146,7 @@ function App() {
       </Drawer>
       <Main open={open} sx={{ p:0 }}>
         <DrawerHeader />
-        <MyExcalidraw activeBoard={activeBoard} /* handleCurrentBoardChange={handleBoardChange} */ />
+        <MyExcalidraw newActiveBoard={board} previousActiveBoard={oldBoard} /* handleCurrentBoardChange={handleBoardChange} */ />
       </Main>
     </Box>
   );
