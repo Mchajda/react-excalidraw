@@ -71,7 +71,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-const boards = ['Board%201', 'Board%202', 'React%20groomer'];
+const boards = ['Board%201', 'Board%202', 'Board%203'];
 
 function App() {
   const theme = useTheme();
@@ -132,7 +132,7 @@ function App() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Board 1', 'Board 2', 'React groomer'].map((text, index) => (
+          {['Board 1', 'Board 2', 'Board 3'].map((text, index) => (
             <ListItem key={text} disablePadding onClick={() => {handleBoardChange(text, board)}}>
               <ListItemButton>
                 <ListItemIcon>

@@ -9,13 +9,13 @@ const MyExcalidraw = ({newActiveBoard, previousActiveBoard}) => {
     const [appState, setAppState] = useState({});
 
     useEffect(() => {
-        // save current board
         localStorage.setItem(escape(previousActiveBoard), JSON.stringify({ elements, appState }));
 
         console.log(escape(newActiveBoard));
         const savedData = localStorage.getItem(escape(newActiveBoard));
         if (savedData) {
             try {
+                console.log(savedData);
                 const parsedData = JSON.parse(savedData);
                 parsedData.appState.collaborators = new Map();
                 
@@ -31,16 +31,22 @@ const MyExcalidraw = ({newActiveBoard, previousActiveBoard}) => {
                 console.error("Error parsing Excalidraw data: ", error);
                 setElements([]);
                 setAppState({});
+
+                const a = [];
+                const b = {};
+                localStorage.setItem(escape(newActiveBoard), JSON.stringify({ a, b }));
             }
+        }
+        else
+        {
+            setElements([]);
+            setAppState({});
         }
     }, [newActiveBoard, previousActiveBoard]);
 
     const handleChange = (elements, appState) => {
         setElements(elements);
         setAppState(appState);
-
-        console.log(previousActiveBoard);
-        localStorage.setItem(escape(previousActiveBoard), JSON.stringify({ elements, appState }));
     };
     
     return (
