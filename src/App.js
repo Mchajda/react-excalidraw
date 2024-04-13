@@ -1,26 +1,20 @@
-import logo from "./logo.svg";
 import "./App.css";
 import MyExcalidraw from "../src/components/MyExcalidraw/MyExcalidraw";
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
+import { styled, useTheme, ThemeProvider } from "@mui/material/styles";
+import { lightTheme, darkTheme } from './themes/themes'; 
+
+import { Box, Drawer, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Button } from "@mui/material";
+
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
+
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 const drawerWidth = 240;
 
@@ -69,10 +63,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const boards = ["Board%201", "Board%202", "Board%203"];
-
 function App() {
   const theme = useTheme();
+  const [pageTheme, setTheme] = React.useState(darkTheme);
+
+  const toggleTheme = () => {
+    if (pageTheme.palette.mode === 'light') {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
+  };
 
   const [open, setOpen] = React.useState(true);
   const [board, setBoard] = React.useState("Board 1");
@@ -90,11 +91,13 @@ function App() {
   };
 
   return (
+    <ThemeProvider theme={pageTheme}>
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -108,6 +111,20 @@ function App() {
           <Typography variant="h6" noWrap component="div">
             {board}
           </Typography>
+          </Box>
+
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleTheme}
+            edge="start"
+          >
+            {pageTheme.palette.mode === "dark" ? (
+              <LightModeIcon />
+            ) : (
+              <DarkModeIcon />
+            )}
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -131,7 +148,7 @@ function App() {
             ) : (
               <ChevronRightIcon />
             )}
-          </IconButton>
+          </IconButton>          
         </DrawerHeader>
 
         <Divider />
@@ -162,6 +179,7 @@ function App() {
         <MyExcalidraw board={board} />
       </Main>
     </Box>
+    </ThemeProvider>
   );
 }
 
