@@ -1,0 +1,10 @@
+/* listStyles.css */
+.listItem .pillListItemButton {
+    border-radius: 1rem;
+    margin: 2px 8px 2px 8px;
+    width: auto;
+  }
+  
+  .listItem .pillListItemButton:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }

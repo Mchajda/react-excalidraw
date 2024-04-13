@@ -3,6 +3,7 @@ import MyExcalidraw from "../src/components/MyExcalidraw/MyExcalidraw";
 import * as React from "react";
 import { styled, useTheme, ThemeProvider } from "@mui/material/styles";
 import { lightTheme, darkTheme } from './themes/themes'; 
+import './css/listStyles.css';
 
 import { Box, Drawer, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Button } from "@mui/material";
 
@@ -156,13 +157,14 @@ function App() {
         <List>
           {["Board 1", "Board 2", "Board 3"].map((text, index) => (
             <ListItem
-              key={text}
-              disablePadding
-              onClick={() => {
-                handleBoardChange(text);
-              }}
+            key={text}
+            disablePadding
+            onClick={() => handleBoardChange(text)}
+            className="listItem"
+          >
+            <ListItemButton
+              className="pillListItemButton"
             >
-              <ListItemButton>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
