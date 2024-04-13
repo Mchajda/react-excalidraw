@@ -1,84 +1,81 @@
-import logo from './logo.svg';
-import './App.css';
-import MyExcalidraw from '../src/components/MyExcalidraw/MyExcalidraw'
-
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { CommitSharp } from '@mui/icons-material';
+import logo from "./logo.svg";
+import "./App.css";
+import MyExcalidraw from "../src/components/MyExcalidraw/MyExcalidraw";
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
     ...(open && {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
       marginLeft: 0,
     }),
-  }),
+  })
 );
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
+  transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
 }));
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: "flex-end",
 }));
 
-const boards = ['Board%201', 'Board%202', 'Board%203'];
+const boards = ["Board%201", "Board%202", "Board%203"];
 
 function App() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
 
+  const [open, setOpen] = React.useState(true);
   const [board, setBoard] = React.useState("Board 1");
-  const [oldBoard, setOldBoard] = React.useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -88,14 +85,14 @@ function App() {
     setOpen(false);
   };
 
-  const handleBoardChange = (newBoardName, oldBoardName) => {
+  const handleBoardChange = (newBoardName) => {
     setBoard(newBoardName);
-    setOldBoard(oldBoardName)
-  }
+  };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
+
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -103,22 +100,24 @@ function App() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" noWrap component="div">
             {board}
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           },
         }}
         variant="persistent"
@@ -127,26 +126,40 @@ function App() {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </DrawerHeader>
+
         <Divider />
+
         <List>
-          {['Board 1', 'Board 2', 'Board 3'].map((text, index) => (
-            <ListItem key={text} disablePadding onClick={() => {handleBoardChange(text, board)}}>
+          {["Board 1", "Board 2", "Board 3"].map((text, index) => (
+            <ListItem
+              key={text}
+              disablePadding
+              onClick={() => {
+                handleBoardChange(text);
+              }}
+            >
               <ListItemButton>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
+
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <Main open={open} sx={{ p:0 }}>
+
+      <Main open={open} sx={{ p: 0 }}>
         <DrawerHeader />
-        <MyExcalidraw newActiveBoard={board} previousActiveBoard={oldBoard} /* handleCurrentBoardChange={handleBoardChange} */ />
+        <MyExcalidraw board={board} />
       </Main>
     </Box>
   );
