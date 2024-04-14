@@ -30,8 +30,9 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -136,9 +137,24 @@ function App() {
     var random1 = Math.floor(Math.random() * 10);
     var random2 = Math.floor(Math.random() * 10);
 
-    const newBoards = [adjectives[random1] + " " + nouns[random2], ...boards];
+    const newBoardName = adjectives[random1] + " " + nouns[random2];
+    const newBoards = [newBoardName, ...boards];
+
     setBoards(newBoards);
     localStorage.setItem("boards", JSON.stringify(newBoards));
+    localStorage.setItem(
+      escape(newBoardName),
+      JSON.stringify({ elements: [], appState: {} })
+    );
+  };
+
+  const handleBoardDelete = (boardName) => {
+    const newBoards = boards.filter((e) => e !== boardName);
+
+    localStorage.removeItem(escape(boardName));
+    localStorage.setItem("boards", JSON.stringify(newBoards));
+
+    setBoards(newBoards);
   };
 
   React.useEffect(() => {
@@ -148,11 +164,11 @@ function App() {
       boardsFromLS = ["Board 1"];
       localStorage.setItem("boards", JSON.stringify(boardsFromLS));
       setBoards(boardsFromLS);
+      setBoard(boardsFromLS[0]);
     } else {
       setBoards(JSON.parse(boardsFromLS));
+      setBoard(JSON.parse(boardsFromLS)[0]);
     }
-
-    setBoard(JSON.parse(boardsFromLS)[0]);
   }, []);
 
   return (
@@ -232,6 +248,13 @@ function App() {
                   </ListItemIcon>
 
                   <ListItemText primary={text} />
+
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleBoardDelete(text)}
+                  >
+                    <DeleteRoundedIcon />
+                  </IconButton>
                 </ListItemButton>
               </ListItem>
             ))}
