@@ -23,7 +23,7 @@ const MyExcalidraw = ({ board }) => {
         appState,
       };
     } catch (error) {
-      console.error(error);
+      //console.error(error);
 
       return {
         elements: [],
